@@ -1,8 +1,10 @@
-public class Veiculo {
+public abstract class Veiculo {
     private String marca;
     private String modelo;
     private int ano;
     private String placa;
+
+    public abstract String getTipo();
 
     public String getMarca() {
         return marca;
@@ -27,6 +29,12 @@ public class Veiculo {
     }
     public void setPlaca(String placa) {
         this.placa = placa;
+    }
+
+    @Override
+    public String toString(){
+        String descricao = "Marca: " + this.getMarca() + " - modelo: " + this.getModelo() +" - placa: " + getPlaca();
+        return descricao;
     }
     
 }
