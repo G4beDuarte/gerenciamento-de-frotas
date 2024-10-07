@@ -21,6 +21,6 @@ public class Moto extends Veiculo{
             partida = "Sim";
         }else
             partida = "Não";
-        return descricao = "Partida Eletrica: " + partida;
+        return descricao + " - Partida Eletrica: " + partida;
     }
 }

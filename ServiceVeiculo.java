@@ -17,13 +17,11 @@ public class ServiceVeiculo {
         }
         for (Veiculo veiculoFrota : frota) {
             if (veiculoFrota.getPlaca().equalsIgnoreCase(veiculo.getPlaca())) {
-                throw new Exception("Já existe cadastrado com esse título: ");
+                throw new Exception("Já existe veículo cadastrado com essa placa: ");
                 }
             }
             frota.add(veiculo);
         }
-    
-    
 
     public List<Veiculo> listarVeiculos() {
         return frota;
@@ -40,5 +38,19 @@ public class ServiceVeiculo {
         if (veiculoRet == null)
             throw new Exception("Veículo não encontrado com a placa informada");
         return veiculoRet;
+    }
+
+    public void removerPorPlaca(String placa) throws Exception{
+        boolean veiculoRemovido = false;
+        for (Veiculo veiculo: frota){
+            if (veiculo.getPlaca().equalsIgnoreCase(placa)){
+                veiculoRemovido = true;
+                frota.remove(veiculo);
+                break;
+            }
+        }
+        if (!veiculoRemovido) {
+            throw new Exception("Este veículo não foi encontrado");
+        }
     }
 }

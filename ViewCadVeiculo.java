@@ -18,7 +18,7 @@ public class ViewCadVeiculo {
     private static int inputNumerico(String mensagem) {
         int valor = 0;
         boolean entradaValida = false;
-        System.out.println(mensagem);
+        System.out.print(mensagem);
         do {
             String valorStr = input.nextLine();
             try {
@@ -31,19 +31,6 @@ public class ViewCadVeiculo {
         return valor;
     }
 
-    public static void listar() {
-        limparTela();
-        var veiculos = service.listarVeiculos();
-        veiculos.sort(Comparator.comparing(Veiculo::getMarca));
-
-        System.out.println("========== LISTA DE VEICULOS ==========");
-        for (Veiculo veiculo : veiculos){
-            System.out.println(veiculo.getTipo());
-            System.out.println(veiculo.toString());
-            System.out.println("--------------------------------------");
-        }
-        aguardarEnter();        
-    }
 
     private static void adicionar(){
         limparTela();
@@ -98,6 +85,54 @@ public class ViewCadVeiculo {
         aguardarEnter();
     }
 
+    private static void listar() {
+        limparTela();
+        var veiculos = service.listarVeiculos();
+        veiculos.sort(Comparator.comparing(Veiculo::getMarca));
+
+        System.out.println("========== LISTA DE VEICULOS ==========");
+        for (Veiculo veiculo : veiculos){
+            System.out.println(veiculo.getTipo());
+            System.out.println(veiculo.toString());
+            System.out.println("--------------------------------------");
+        }
+        aguardarEnter();        
+    }
+
+    private static void pesquisarPorPlaca(){
+        limparTela();
+        System.out.println("========== PESQUISAR PLACA DE VEICULOS ==========");
+
+        System.out.print("Informe a placa do veículo: ");
+        String placa = input.nextLine();
+
+        try{
+            Veiculo veiculo = service.pesquisarPorPlaca(placa);
+            if(veiculo != null){
+                System.out.println(veiculo.toString());
+            }else{
+                System.out.println("Veículo não encontrado com a placa informada");
+            }
+        }catch (Exception e){
+            System.out.println("ERRO: " + e.getMessage());
+        }
+        aguardarEnter();
+    }
+
+    public static void removerPorPlaca() {
+        limparTela();
+        listar();
+        System.out.println("========== REMOVENDO VEICULO ==========");
+        System.out.print("Digite a placa do veículo que deseja remover: ");
+        String placa = input.nextLine();
+        try {
+            service.removerPorPlaca(placa);
+            System.out.println("Veículo removido com sucesso!");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        aguardarEnter();
+    }
 
     public static void main(String[] args){
         String menu = """
@@ -125,10 +160,10 @@ public class ViewCadVeiculo {
                     listar();
                     break;
                 case 3:
-                    
+                    pesquisarPorPlaca();
                     break;
                 case 4:
-                    
+                    removerPorPlaca();
                     break;
                 default:
                     System.out.println("Opção Inválida!!!");
